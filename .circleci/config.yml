@@ -2,43 +2,9 @@ version: 2
 jobs:
   build:
     parallelism: 4
-    docker:
-      - image: circleci/elixir:1.8.1
-
-    working_directory: ~/app/adifier
-
-    steps:
+    macos:  # indicate that we are using the macOS executor
+      xcode: "10.0.0" # indicate our selected version of Xcode
+    steps: # a series of commands to run
       - checkout
-
-      - restore_cache:
-          keys:
-            - adify-dependency-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-            - adify-dependency-cache-{{ .Branch }}
-            - adify-dependency-cache
-      - restore_cache:
-          keys:
-            - adify-build-cache-{{ .Branch }}
-            - adify-build-cache
-
-      - run: cd adifier
-      - run: mix local.hex --force
-      - run: cd adifier; mix local.rebar --force
-      - run: cd adifier; mix do deps.get, compile
-
-      - save_cache:
-          key: adify-dependency-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-          paths: "deps"
-      - save_cache:
-          key: adify-dependency-cache-{{ .Branch }}
-          paths: "deps"
-      - save_cache:
-          key: adify-dependency-cache
-          paths: "deps"
-      - save_cache:
-          key: adify-build-cache-{{ .Branch }}
-          paths: "_build"
-      - save_cache:
-          key: adify-build-cache
-          paths: "_build"
 
       - run: ./adify.sh --noconfirm
