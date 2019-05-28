@@ -2,9 +2,9 @@ version: 2
 jobs:
   build:
     parallelism: 4
-    macos:  # indicate that we are using the macOS executor
-      xcode: "10.0.0" # indicate our selected version of Xcode
-    steps: # a series of commands to run
+    docker:
+      - image: circleci/elixir:1.8.1
+    steps:
       - checkout
 
       - run: ./adify.sh --noconfirm
