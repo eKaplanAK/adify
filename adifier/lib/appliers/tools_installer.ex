@@ -11,6 +11,8 @@ defmodule Adifier.Applier.ToolsInstaller do
     Clang
     Curl
     Docker
+    DockerMysql
+    DockerPostgres
     GoogleChrome
     Imagemagick
     Mysql
